@@ -4,7 +4,7 @@ import cors from 'cors';
 const apiRouter = require('./src/routes/api'); // 修正路徑
 const app = express();
 app.use(cors({
-    origin: 'https://agentic-ai-matt-backend.vercel.app', // 允許所有來源
+    origin: 'https://matt-ai-assistant.vercel.app/', // 允許所有來源
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // 允許的 HTTP 方法
     allowedHeaders: ['Content-Type', 'Authorization'] // 允許的標頭
 }))
