@@ -6,7 +6,6 @@ const router = express.Router();
 // 建立 MySQL 連線池
 const pool = mysql.createPool({
     host: 'localhost',
-    port: 3306,
     user: 'root',
     password: 'wenliang75',
     database: 'mattlocaldb',
@@ -16,6 +15,8 @@ router.get('/data', (req, res) => {
     res.json({ message: 'Hello from the API!' });
 });
 router.get('/users', async (req: Request, res: Response) => {
+    res.json({ message: 'Hello from the API2!' });
+    /*
     try {
         //const [rows] = await pool.query('SELECT * FROM admin');
         const [rows] = await pool.query('SELECT * FROM admin');
@@ -23,6 +24,7 @@ router.get('/users', async (req: Request, res: Response) => {
     } catch (err) {
         res.status(500).json({ message: 'Database error', error: (err as Error).message });
     }
+        */
 }
 );
 /*
