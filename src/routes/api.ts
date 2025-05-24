@@ -25,10 +25,11 @@ router.get('/users', async (req:Request,res:Response) => {
         res.status(500).json({ message: 'Database error', error: (err as Error).message });
     }
         
-}
-);
-/*
-router.get('/login', async (req: Request, res: Response) => {
+});
+// vercel 是放在雲端伺服器,但mysql 是放在本地端的資料庫
+
+
+router.get('/login', async (req,res) => {
     const { username, password } = req.query;
     if (!username || !password) {
         return res.status(400).json({ message: 'Missing username or password' });
@@ -48,5 +49,5 @@ router.get('/login', async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Database error', error: (err as Error).message });
     }
 });
-*/
+
 export default router;

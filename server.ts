@@ -4,7 +4,7 @@ import apiRouter from './src/routes/api'; // 用 import 取代 require
 
 const app = express();
 app.use(cors({
-    origin: 'https://matt-ai-assistant.vercel.app/',
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
