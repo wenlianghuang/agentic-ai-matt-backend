@@ -1,17 +1,17 @@
 import express from 'express';
 import cors from 'cors';
+import apiRouter from './src/routes/api'; // 用 import 取代 require
 
-const apiRouter = require('./src/routes/api'); // 修正路徑
 const app = express();
 app.use(cors({
-    origin: 'https://matt-ai-assistant.vercel.app/', // 允許所有來源
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // 允許的 HTTP 方法
-    allowedHeaders: ['Content-Type', 'Authorization'] // 允許的標頭
-}))
+    origin: 'https://matt-ai-assistant.vercel.app/',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
-app.use('/api', apiRouter); // 確保路由正確掛載
+app.use('/api', apiRouter);
 
-const PORT = process.env.PORT || 3000; // 修正拼寫錯誤
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
