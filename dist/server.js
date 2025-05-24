@@ -4,11 +4,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const apiRouter = require('./src/routes/api'); // 修正路徑
+const cors_1 = __importDefault(require("cors"));
+const api_1 = __importDefault(require("./src/routes/api")); // 用 import 取代 require
 const app = (0, express_1.default)();
+app.use((0, cors_1.default)({
+    origin: 'https://matt-ai-assistant.vercel.app/',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express_1.default.json());
-app.use('/api', apiRouter); // 確保路由正確掛載
-const PORT = process.env.PORT || 3000; // 修正拼寫錯誤
+app.use('/api', api_1.default);
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
