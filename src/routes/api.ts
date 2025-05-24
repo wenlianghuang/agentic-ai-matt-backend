@@ -14,7 +14,7 @@ const pool = mysql.createPool({
 router.get('/data', (req, res) => {
     res.json({ message: 'Hello from the API!' });
 });
-router.get('/users', (req: Request, res: Response) => {
+router.get('/users', (req,res) => {
     res.json({ message: 'users ok' });
     /*
     try {
