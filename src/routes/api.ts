@@ -14,8 +14,8 @@ const pool = mysql.createPool({
 router.get('/data', (req, res) => {
     res.json({ message: 'Hello from the API!' });
 });
-router.get('/users', async (req: Request, res: Response) => {
-    res.json({ message: 'Hello from the API2!' });
+router.get('/users', (req: Request, res: Response) => {
+    res.json({ message: 'users ok' });
     /*
     try {
         //const [rows] = await pool.query('SELECT * FROM admin');
