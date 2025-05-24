@@ -8,7 +8,7 @@ const cors_1 = __importDefault(require("cors"));
 const api_1 = __importDefault(require("./src/routes/api")); // 用 import 取代 require
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    origin: 'https://matt-ai-assistant.vercel.app/',
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));

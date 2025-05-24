@@ -36,6 +36,7 @@ router.get('/users', (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.status(500).json({ message: 'Database error', error: err.message });
     }
 }));
+// vercel 是放在雲端伺服器,但mysql 是放在本地端的資料庫
 /*
 router.get('/login', async (req: Request, res: Response) => {
     const { username, password } = req.query;
