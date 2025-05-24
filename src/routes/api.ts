@@ -14,9 +14,9 @@ const pool = mysql.createPool({
 router.get('/data', (req, res) => {
     res.json({ message: 'Hello from the API 0524!' });
 });
-router.get('/users', (req,res) => {
-    res.json({ message: 'users ok' });
-    /*
+router.get('/users', async (req:Request,res:Response) => {
+    //res.json({ message: 'users ok' });
+    
     try {
         //const [rows] = await pool.query('SELECT * FROM admin');
         const [rows] = await pool.query('SELECT * FROM admin');
@@ -24,7 +24,7 @@ router.get('/users', (req,res) => {
     } catch (err) {
         res.status(500).json({ message: 'Database error', error: (err as Error).message });
     }
-        */
+        
 }
 );
 /*
