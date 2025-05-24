@@ -12,7 +12,7 @@ const pool = mysql.createPool({
 });
 
 router.get('/data', (req, res) => {
-    res.json({ message: 'Hello from the API!' });
+    res.json({ message: 'Hello from the API 0524!' });
 });
 router.get('/users', (req,res) => {
     res.json({ message: 'users ok' });
