@@ -1,13 +1,13 @@
 import express, { Request, Response } from 'express';
 import mysql from 'mysql2/promise'; // 新增
-
+import dotenv from 'dotenv';
 const router = express.Router();
-
+dotenv.config(); // 載入 .env 檔案
 // 建立 MySQL 連線池
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: 'wenliang75',
+    host: process.env.DBHOST || 'localhost',
+    user: process.env.DBUSER,
+    password: process.env.DBPASSWORD,
     database: 'mattlocaldb',
 });
 
@@ -27,18 +27,17 @@ router.get('/users', async (req:Request,res:Response) => {
         
 });
 // vercel 是放在雲端伺服器,但mysql 是放在本地端的資料庫
-
-
-router.get('/login', async (req,res) => {
-    const { username, password } = req.query;
-    if (!username || !password) {
+router.post('/login', async (req,res) => {
+    const { account, password } = req.body;
+    console.log('Received login request:', { account, password });
+    if (!account || !password) {
         return res.status(400).json({ message: 'Missing username or password' });
     }
 
     try {
         const [rows] = await pool.query(
             'SELECT * FROM admin WHERE account = ? AND password = ?',
-            [username, password]
+            [account, password]
         );
         if ((rows as any[]).length > 0) {
             res.json({ message: 'Login successful!' });
