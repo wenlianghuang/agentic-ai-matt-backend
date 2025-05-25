@@ -85,7 +85,7 @@ router.get('/auth/google/callback',
         httpOnly: true,
         secure: true, // 僅 HTTPS 時啟用
         sameSite: 'lax',
-        maxAge: 60 * 60 * 10 // 1 小時
+        maxAge: 60 * 60 * 1000 // 1 小時
     });
     res.redirect(`https://matt-ai-assistant.vercel.app/chatbot`); // 替換為你的前端網址
   }
