@@ -21,9 +21,6 @@ const passport_1 = __importDefault(require("../middleware/passport")); // 假設
 dotenv_1.default.config(); // 載入 .env 檔案
 const router = express_1.default.Router();
 // 建立 MySQL 連線池
-console.log('DBHOST:', process.env.DBHOST);
-console.log('DBUSER:', process.env.DBUSER);
-console.log('DBPASSWORD:', process.env.DBPASSWORD);
 const pool = promise_1.default.createPool({
     host: process.env.DBHOST || 'localhost',
     user: process.env.DBUSER,
@@ -67,8 +64,29 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 }));
 router.get('/auth/google', passport_1.default.authenticate('google', { scope: ['profile', 'email'] }));
-router.get('/auth/google/callback', passport_1.default.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+/*
+router.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
     // 登入成功，這裡可以產生 JWT 或直接回傳 session
     res.json({ message: 'Google login successful', user: req.user });
+  }
+);*/
+// ...existing code...
+router.get('/auth/google/callback', passport_1.default.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+    var _a, _b, _c;
+    // 產生 JWT token
+    const user = req.user;
+    const token = jsonwebtoken_1.default.sign({ id: user.id || ((_a = user.profile) === null || _a === void 0 ? void 0 : _a.id), email: (_c = (_b = user.emails) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.value }, process.env.JWT_SECRET || 'default_secret', { expiresIn: '1h' });
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: true, // 僅 HTTPS 時啟用
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 1000 // 1 小時
+    });
+    // 導向前端，並帶上 token
+    //res.redirect(`https://matt-ai-assistant.vercel.app/oauth-success?token=${token}`);
+    res.redirect(`https://matt-ai-assistant.vercel.app/chatbot`); // 替換為你的前端網址
 });
+// ...existing code...
 exports.default = router;

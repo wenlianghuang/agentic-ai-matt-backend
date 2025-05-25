@@ -8,9 +8,6 @@ dotenv.config(); // 載入 .env 檔案
 const router = express.Router();
 
 // 建立 MySQL 連線池
-console.log('DBHOST:', process.env.DBHOST);
-console.log('DBUSER:', process.env.DBUSER);
-console.log('DBPASSWORD:', process.env.DBPASSWORD);
 const pool = mysql.createPool({
     host: process.env.DBHOST || 'localhost',
     user: process.env.DBUSER,
@@ -64,11 +61,34 @@ router.get('/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
+/*
 router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // 登入成功，這裡可以產生 JWT 或直接回傳 session
     res.json({ message: 'Google login successful', user: req.user });
   }
+);*/
+// ...existing code...
+router.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    // 產生 JWT token
+    const user = req.user as any;
+    const token = jwt.sign(
+      { id: user.id || user.profile?.id, email: user.emails?.[0]?.value },
+      process.env.JWT_SECRET || 'default_secret',
+      { expiresIn: '1h' }
+    );
+    // 將 token 存入 session, 用session來管理登入狀態
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: true, // 僅 HTTPS 時啟用
+        sameSite: 'lax',
+        maxAge: 60 * 60 * 10 // 1 小時
+    });
+    res.redirect(`https://matt-ai-assistant.vercel.app/chatbot`); // 替換為你的前端網址
+  }
 );
+// ...existing code...
 export default router;
