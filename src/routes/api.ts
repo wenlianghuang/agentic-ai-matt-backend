@@ -90,7 +90,7 @@ router.post('/weather/utc8', async (req: Request, res: Response) => {
                 return { city, weather };
             })
         );
-        //console.log('Weather resultts: ', results);
+        console.log('Weather resultts: ', results);
         res.json(results);
     } catch (err) {
         res.status(500).json({ message: 'Weather API error', error: (err as Error).message });

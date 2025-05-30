@@ -90,7 +90,7 @@ router.post('/weather/utc8', (req, res) => __awaiter(void 0, void 0, void 0, fun
             const weather = yield (0, accuweather_1.getCurrentWeather)(key);
             return { city, weather };
         })));
-        //console.log('Weather resultts: ', results);
+        console.log('Weather resultts: ', results);
         res.json(results);
     }
     catch (err) {
